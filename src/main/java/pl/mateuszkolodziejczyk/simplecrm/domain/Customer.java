@@ -7,18 +7,18 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
-    String surname;
-    String phone;
-    String email;
-    String department;
+    private Long id;
+    private String name;
+    private String surname;
+    private String phone;
+    private String email;
+    private String department;
     @OneToOne
-    Company company;
+    private Company company;
     @OneToOne
-    ContactHistory contactHistory;
+    private ContactHistory contactHistory;
     @ManyToOne
-    Employee employee;
+    private Employee employee;
 
     public Customer() {
     }

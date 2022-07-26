@@ -8,14 +8,14 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
-    String surname;
-    String phone;
-    String email;
-    String department;
+    private Long id;
+    private String name;
+    private String surname;
+    private String phone;
+    private String email;
+    private String department;
     @OneToMany(mappedBy = "employee")
-    List<Customer> customers;
+    private List<Customer> customers;
 
     public Employee() {
     }

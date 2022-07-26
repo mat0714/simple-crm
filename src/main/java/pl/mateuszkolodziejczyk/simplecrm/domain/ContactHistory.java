@@ -8,11 +8,11 @@ public class ContactHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    LocalDate Date;
-    String details;
+    private Long id;
+    private LocalDate Date;
+    private String details;
     @OneToOne(mappedBy = "contactHistory")
-    Customer customer;
+    private Customer customer;
 
     public ContactHistory() {
     }

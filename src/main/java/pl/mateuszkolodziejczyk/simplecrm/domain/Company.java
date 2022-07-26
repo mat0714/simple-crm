@@ -7,15 +7,15 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
-    String streetNumber;
-    String streetName;
-    String city;
-    String state;
-    String zipCode;
+    private Long id;
+    private String name;
+    private String streetNumber;
+    private String streetName;
+    private String city;
+    private String state;
+    private String zipCode;
     @OneToOne(mappedBy = "company")
-    Customer customer;
+    private Customer customer;
 
     public Company() {
     }
