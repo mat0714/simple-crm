@@ -38,6 +38,13 @@ public class EmployeeApi {
         return ResponseEntity.status(HttpStatus.OK).body(allEmployees);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeResponse> updateEmployee(
+            @PathVariable Long id, @RequestBody EmployeeRequest employeeRequest) {
+        EmployeeResponse employeeResponse = employeeService.updateEmployee(id, employeeRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(employeeResponse);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);

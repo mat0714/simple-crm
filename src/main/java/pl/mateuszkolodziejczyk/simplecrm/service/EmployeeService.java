@@ -34,6 +34,13 @@ public class EmployeeService {
                 .map(employeeMapper::toEmployeeResponse).collect(Collectors.toList());
     }
 
+    public EmployeeResponse updateEmployee(Long id, EmployeeRequest employeeRequest) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Employee doesn't exist"));
+        employeeRepository.save(employeeMapper.toEmployee(employee, employeeRequest));
+        return employeeMapper.toEmployeeResponse(employee);
+    }
+
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Employee doesn't exist"));

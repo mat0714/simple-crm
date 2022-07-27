@@ -19,6 +19,15 @@ public class EmployeeMapper {
         );
     }
 
+        public Employee toEmployee(Employee employee, EmployeeRequest employeeRequest) {
+            employee.setName(employeeRequest.getName());
+            employee.setSurname(employeeRequest.getSurname());
+            employee.setPhone(employeeRequest.getPhone());
+            employee.setEmail(employeeRequest.getEmail());
+            employee.setDepartment(employeeRequest.getDepartment());
+            return employee;
+        }
+
     public EmployeeResponse toEmployeeResponse(Employee employee) {
         return new EmployeeResponse(
                 employee.getId(),
@@ -30,5 +39,4 @@ public class EmployeeMapper {
                 employee.getCustomers()
         );
     }
-
 }
