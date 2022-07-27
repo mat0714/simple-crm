@@ -1,8 +1,8 @@
 package pl.mateuszkolodziejczyk.simplecrm.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

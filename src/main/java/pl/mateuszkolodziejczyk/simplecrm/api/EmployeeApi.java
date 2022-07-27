@@ -3,7 +3,8 @@ package pl.mateuszkolodziejczyk.simplecrm.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.mateuszkolodziejczyk.simplecrm.domain.Employee;
+import pl.mateuszkolodziejczyk.simplecrm.api.request.EmployeeRequest;
+import pl.mateuszkolodziejczyk.simplecrm.api.response.EmployeeResponse;
 import pl.mateuszkolodziejczyk.simplecrm.service.EmployeeService;
 
 import java.util.List;
@@ -19,20 +20,21 @@ public class EmployeeApi {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employeeToSave) {
-        Employee employee = employeeService.saveEmployee(employeeToSave);
-        return ResponseEntity.status(HttpStatus.CREATED).body(employee);
+    public ResponseEntity<EmployeeResponse> saveEmployee(@RequestBody EmployeeRequest employeeRequest) {
+
+        EmployeeResponse employeeResponse = employeeService.saveEmployee(employeeRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> findEmployee(@PathVariable Long id) {
-        Employee employee = employeeService.findEmployeeById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(employee);
+    public ResponseEntity<EmployeeResponse> findEmployee(@PathVariable Long id) {
+        EmployeeResponse employeeResponse = employeeService.findEmployeeById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(employeeResponse);
     }
 
     @GetMapping
-    public ResponseEntity<List<Employee>> findAll() {
-        List<Employee> allEmployees = employeeService.findAll();
+    public ResponseEntity<List<EmployeeResponse>> findAll() {
+        List<EmployeeResponse> allEmployees = employeeService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(allEmployees);
     }
 
