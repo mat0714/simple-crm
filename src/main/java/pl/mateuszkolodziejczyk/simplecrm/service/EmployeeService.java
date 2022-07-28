@@ -7,6 +7,7 @@ import pl.mateuszkolodziejczyk.simplecrm.api.response.EmployeeResponse;
 import pl.mateuszkolodziejczyk.simplecrm.domain.Employee;
 import pl.mateuszkolodziejczyk.simplecrm.repository.EmployeeRepository;
 import pl.mateuszkolodziejczyk.simplecrm.support.EmployeeMapper;
+import pl.mateuszkolodziejczyk.simplecrm.support.EmployeeExceptionSupplier;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class EmployeeService {
 
     public EmployeeResponse findEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Employee doesn't exist"));
+                EmployeeExceptionSupplier.itemNotFound(id));
         return employeeMapper.toEmployeeResponse(employee);
     }
 
@@ -36,14 +37,14 @@ public class EmployeeService {
 
     public EmployeeResponse updateEmployee(Long id, EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Employee doesn't exist"));
+                EmployeeExceptionSupplier.itemNotFound(id));
         employeeRepository.save(employeeMapper.toEmployee(employee, employeeRequest));
         return employeeMapper.toEmployeeResponse(employee);
     }
 
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Employee doesn't exist"));
+                EmployeeExceptionSupplier.itemNotFound(id));
         employeeRepository.delete(employee);
     }
 }
