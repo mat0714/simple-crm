@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.domain;
+package pl.mateuszkolodziejczyk.simplecrm.employee.domain;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,11 +1,11 @@
-package pl.mateuszkolodziejczyk.simplecrm.api;
+package pl.mateuszkolodziejczyk.simplecrm.employee.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.mateuszkolodziejczyk.simplecrm.api.request.EmployeeRequest;
-import pl.mateuszkolodziejczyk.simplecrm.api.response.EmployeeResponse;
-import pl.mateuszkolodziejczyk.simplecrm.service.EmployeeService;
+import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
+import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
+import pl.mateuszkolodziejczyk.simplecrm.employee.service.EmployeeService;
 
 import java.util.List;
 

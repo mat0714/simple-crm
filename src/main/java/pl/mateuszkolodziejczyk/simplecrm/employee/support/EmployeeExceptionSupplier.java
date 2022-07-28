@@ -1,6 +1,6 @@
-package pl.mateuszkolodziejczyk.simplecrm.support;
+package pl.mateuszkolodziejczyk.simplecrm.employee.support;
 
-import pl.mateuszkolodziejczyk.simplecrm.support.exception.EmployeeNotFoundException;
+import pl.mateuszkolodziejczyk.simplecrm.employee.support.exception.EmployeeNotFoundException;
 
 import java.util.function.Supplier;
 

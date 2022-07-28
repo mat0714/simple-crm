@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.support;
+package pl.mateuszkolodziejczyk.simplecrm.employee.support;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.mateuszkolodziejczyk.simplecrm.shared.api.response.ErrorMessageResponse;
-import pl.mateuszkolodziejczyk.simplecrm.support.exception.EmployeeNotFoundException;
+import pl.mateuszkolodziejczyk.simplecrm.employee.support.exception.EmployeeNotFoundException;
 
 @ControllerAdvice
 public class EmployeeExceptionAdvisor {

@@ -1,16 +1,16 @@
-package pl.mateuszkolodziejczyk.simplecrm.api.request;
+package pl.mateuszkolodziejczyk.simplecrm.employee.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import pl.mateuszkolodziejczyk.simplecrm.domain.Customer;
+import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Customer;
 
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class EmployeeRequest {
+public class EmployeeResponse {
 
+    private Long id;
     private String name;
     private String surname;
     private String phone;

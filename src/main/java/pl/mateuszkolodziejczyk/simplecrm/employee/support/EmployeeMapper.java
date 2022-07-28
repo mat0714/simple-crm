@@ -1,9 +1,9 @@
-package pl.mateuszkolodziejczyk.simplecrm.support;
+package pl.mateuszkolodziejczyk.simplecrm.employee.support;
 
 import org.springframework.stereotype.Component;
-import pl.mateuszkolodziejczyk.simplecrm.api.request.EmployeeRequest;
-import pl.mateuszkolodziejczyk.simplecrm.api.response.EmployeeResponse;
-import pl.mateuszkolodziejczyk.simplecrm.domain.Employee;
+import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
+import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
+import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
 
 @Component
 public class EmployeeMapper {

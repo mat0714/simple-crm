@@ -1,13 +1,13 @@
-package pl.mateuszkolodziejczyk.simplecrm.service;
+package pl.mateuszkolodziejczyk.simplecrm.employee.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.mateuszkolodziejczyk.simplecrm.api.request.EmployeeRequest;
-import pl.mateuszkolodziejczyk.simplecrm.api.response.EmployeeResponse;
-import pl.mateuszkolodziejczyk.simplecrm.domain.Employee;
-import pl.mateuszkolodziejczyk.simplecrm.repository.EmployeeRepository;
-import pl.mateuszkolodziejczyk.simplecrm.support.EmployeeMapper;
-import pl.mateuszkolodziejczyk.simplecrm.support.EmployeeExceptionSupplier;
+import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
+import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
+import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
+import pl.mateuszkolodziejczyk.simplecrm.employee.repository.EmployeeRepository;
+import pl.mateuszkolodziejczyk.simplecrm.employee.support.EmployeeMapper;
+import pl.mateuszkolodziejczyk.simplecrm.employee.support.EmployeeExceptionSupplier;
 
 import java.util.List;
 import java.util.stream.Collectors;
