@@ -2,7 +2,7 @@ package pl.mateuszkolodziejczyk.simplecrm.employee.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Customer;
+import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 
 import java.util.List;
 
