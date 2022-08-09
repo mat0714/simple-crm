@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.customer.support;
+package pl.mateuszkolodziejczyk.simplecrm.customer.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;

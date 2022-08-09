@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.shared.api.response;
+package pl.mateuszkolodziejczyk.simplecrm.exception;
 
 public class ErrorMessageResponse {
 

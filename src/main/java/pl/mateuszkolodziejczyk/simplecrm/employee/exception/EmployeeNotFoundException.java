@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.employee.support.exception;
+package pl.mateuszkolodziejczyk.simplecrm.employee.exception;
 
 public class EmployeeNotFoundException extends RuntimeException {
 

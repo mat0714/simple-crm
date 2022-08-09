@@ -6,8 +6,8 @@ import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerResponse;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 import pl.mateuszkolodziejczyk.simplecrm.customer.repository.CustomerRepository;
-import pl.mateuszkolodziejczyk.simplecrm.customer.support.CustomerMapper;
-import pl.mateuszkolodziejczyk.simplecrm.employee.support.EmployeeExceptionSupplier;
+import pl.mateuszkolodziejczyk.simplecrm.customer.mapper.CustomerMapper;
+import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class CustomerService {
 
     public CustomerResponse findCustomerById(Long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(
-                EmployeeExceptionSupplier.itemNotFound(id));
+                ExceptionSupplier.customerNotFound(id));
         return customerMapper.toCustomerResponse(customer);
     }
 
@@ -37,14 +37,14 @@ public class CustomerService {
 
     public CustomerResponse updateCustomer(Long id, CustomerRequest customerRequest) {
         Customer customer = customerRepository.findById(id).orElseThrow(
-                EmployeeExceptionSupplier.itemNotFound(id));
+                ExceptionSupplier.customerNotFound(id));
         customerRepository.save(customerMapper.toCustomer(customer, customerRequest));
         return customerMapper.toCustomerResponse(customer);
     }
 
     public void deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(
-                EmployeeExceptionSupplier.itemNotFound(id));
+                ExceptionSupplier.customerNotFound(id));
         customerRepository.delete(customer);
     }
 }
