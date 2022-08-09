@@ -1,6 +1,6 @@
 package pl.mateuszkolodziejczyk.simplecrm.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,14 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import static pl.mateuszkolodziejczyk.simplecrm.security.ApplicationUserRole.*;
 
 @Configuration
+@RequiredArgsConstructor
 public class ApplicationSecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,5 +45,4 @@ public class ApplicationSecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(manager, employee);
     }
-
 }
