@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerResponse;
 import pl.mateuszkolodziejczyk.simplecrm.customer.service.CustomerService;
-import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
-import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
-import pl.mateuszkolodziejczyk.simplecrm.employee.service.EmployeeService;
 
 import java.util.List;
 

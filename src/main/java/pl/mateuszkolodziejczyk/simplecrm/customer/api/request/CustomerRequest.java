@@ -16,6 +16,5 @@ public class CustomerRequest {
     private String email;
     private String department;
     private Company company;
-    private ContactHistory contactHistory;
     private Employee employee;
 }

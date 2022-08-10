@@ -21,7 +21,9 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/api/customers").hasRole(MANAGER.name())
                 .antMatchers("/api/employees").hasRole(MANAGER.name())
                 .anyRequest().authenticated()
                 .and()

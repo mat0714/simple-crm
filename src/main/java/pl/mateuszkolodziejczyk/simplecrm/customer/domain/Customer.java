@@ -30,14 +30,13 @@ public class Customer {
     @ManyToOne
     private Employee employee;
 
-    public Customer(String name, String surname, String phone, String email, String department, Company company, ContactHistory contactHistory, Employee employee) {
+    public Customer(String name, String surname, String phone, String email, String department, Company company, Employee employee) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
         this.department = department;
         this.company = company;
-        this.contactHistory = contactHistory;
         this.employee = employee;
     }
 }

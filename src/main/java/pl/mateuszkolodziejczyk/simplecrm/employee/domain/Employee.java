@@ -25,12 +25,11 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<Customer> customers;
 
-    public Employee(String name, String surname, String phone, String email, String department, List<Customer> customers) {
+    public Employee(String name, String surname, String phone, String email, String department) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
         this.department = department;
-        this.customers = customers;
     }
 }

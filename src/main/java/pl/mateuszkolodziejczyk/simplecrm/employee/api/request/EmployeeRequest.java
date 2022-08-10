@@ -16,6 +16,4 @@ public class EmployeeRequest {
     private String phone;
     private String email;
     private String department;
-    private List<Customer> customers;
-
 }
