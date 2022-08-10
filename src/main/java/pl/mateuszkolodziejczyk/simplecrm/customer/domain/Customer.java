@@ -3,8 +3,8 @@ package pl.mateuszkolodziejczyk.simplecrm.customer.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Company;
-import pl.mateuszkolodziejczyk.simplecrm.employee.domain.ContactHistory;
+import pl.mateuszkolodziejczyk.simplecrm.company.domain.Company;
+import pl.mateuszkolodziejczyk.simplecrm.contacthistory.domain.ContactHistory;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
 
 import javax.persistence.*;

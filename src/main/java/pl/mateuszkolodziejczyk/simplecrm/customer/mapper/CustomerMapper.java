@@ -7,6 +7,7 @@ import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 
 @Component
 public class CustomerMapper {
+
     public Customer toCustomer(CustomerRequest customerRequest) {
         return new Customer(
                 customerRequest.getName(),

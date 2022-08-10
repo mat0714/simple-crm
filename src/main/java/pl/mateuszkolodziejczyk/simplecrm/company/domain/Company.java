@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.employee.domain;
+package pl.mateuszkolodziejczyk.simplecrm.company.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,4 +25,12 @@ public class Company {
     @OneToOne(mappedBy = "company")
     private Customer customer;
 
+    public Company(String name, String streetNumber, String streetName, String city, String state, String zipCode) {
+        this.name = name;
+        this.streetNumber = streetNumber;
+        this.streetName = streetName;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
 }

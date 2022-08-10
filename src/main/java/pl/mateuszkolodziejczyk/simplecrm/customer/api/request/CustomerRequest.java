@@ -2,8 +2,7 @@ package pl.mateuszkolodziejczyk.simplecrm.customer.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Company;
-import pl.mateuszkolodziejczyk.simplecrm.employee.domain.ContactHistory;
+import pl.mateuszkolodziejczyk.simplecrm.company.domain.Company;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
 
 @Getter
