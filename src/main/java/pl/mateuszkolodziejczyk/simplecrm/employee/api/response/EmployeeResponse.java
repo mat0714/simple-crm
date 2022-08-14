@@ -17,5 +17,4 @@ public class EmployeeResponse {
     private String email;
     private String department;
     private List<Customer> customers;
-
 }

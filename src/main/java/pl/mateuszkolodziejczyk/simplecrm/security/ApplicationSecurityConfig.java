@@ -22,7 +22,10 @@ public class ApplicationSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeRequests()
+                .antMatchers("/console/**").permitAll()
                 .antMatchers("/api/customers").hasRole(MANAGER.name())
                 .antMatchers("/api/employees").hasRole(MANAGER.name())
                 .anyRequest().authenticated()

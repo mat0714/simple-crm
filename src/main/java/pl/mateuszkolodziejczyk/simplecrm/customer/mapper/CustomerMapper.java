@@ -16,6 +16,7 @@ public class CustomerMapper {
                 customerRequest.getEmail(),
                 customerRequest.getDepartment(),
                 customerRequest.getCompany(),
+                customerRequest.getContactHistory(),
                 customerRequest.getEmployee()
         );
     }

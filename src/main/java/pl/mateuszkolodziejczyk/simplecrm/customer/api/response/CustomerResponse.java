@@ -6,6 +6,8 @@ import pl.mateuszkolodziejczyk.simplecrm.company.domain.Company;
 import pl.mateuszkolodziejczyk.simplecrm.contacthistory.domain.ContactHistory;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public class CustomerResponse {
@@ -17,6 +19,6 @@ public class CustomerResponse {
     private String email;
     private String department;
     private Company company;
-    private ContactHistory contactHistory;
+    private List<ContactHistory> contactHistory;
     private Employee employee;
 }

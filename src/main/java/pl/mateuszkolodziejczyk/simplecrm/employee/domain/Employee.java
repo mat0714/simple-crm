@@ -1,5 +1,7 @@
 package pl.mateuszkolodziejczyk.simplecrm.employee.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public class Employee {
     private String email;
     private String department;
     @OneToMany(mappedBy = "employee")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Customer> customers;
 
     public Employee(String name, String surname, String phone, String email, String department) {
