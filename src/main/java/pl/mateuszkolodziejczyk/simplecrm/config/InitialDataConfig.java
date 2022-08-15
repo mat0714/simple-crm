@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.mateuszkolodziejczyk.simplecrm.company.domain.Company;
-import pl.mateuszkolodziejczyk.simplecrm.contacthistory.domain.ContactHistory;
+import pl.mateuszkolodziejczyk.simplecrm.event.domain.Event;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 import pl.mateuszkolodziejczyk.simplecrm.customer.repository.CustomerRepository;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
@@ -36,17 +36,17 @@ public class InitialDataConfig implements CommandLineRunner {
                 "02-672"
         );
 
-        ContactHistory contact1 = new ContactHistory(
+        Event event1 = new Event(
                 LocalDate.of(2021, 7, 14),
                 "Good meeting. Customer is really interested in our product."
         );
 
-        ContactHistory contact2 = new ContactHistory(
+        Event event2 = new Event(
                 LocalDate.of(2021, 8, 10),
                 "Customer is going to send order tomorrow."
         );
 
-        List<ContactHistory> contactHistory = List.of(contact1, contact2);
+        List<Event> event = List.of(event1, event2);
 
         Employee employee = new Employee(
                 "Marcin",
@@ -63,12 +63,12 @@ public class InitialDataConfig implements CommandLineRunner {
                 "jdoe@ecorp.com",
                 "R&D",
                 company,
-                contactHistory,
+                event,
                 employee
         );
 
-        contact1.setCustomer(customer);
-        contact2.setCustomer(customer);
+        event1.setCustomer(customer);
+        event2.setCustomer(customer);
         customerRepository.save(customer);
     }
 
@@ -82,22 +82,22 @@ public class InitialDataConfig implements CommandLineRunner {
                 "02-091"
         );
 
-        ContactHistory contact1 = new ContactHistory(
+        Event event1 = new Event(
                 LocalDate.of(2022, 3, 4),
                 "Very interested but not have time. Next contact in April."
         );
 
-        ContactHistory contact2 = new ContactHistory(
+        Event event2 = new Event(
                 LocalDate.of(2022, 4, 10),
                 "Presentation for customer was made. Want to buy next month."
         );
 
-        ContactHistory contact3 = new ContactHistory(
+        Event event3 = new Event(
                 LocalDate.of(2022, 5, 5),
                 "Sold our Mega Package."
         );
 
-        List<ContactHistory> contactHistory = List.of(contact1, contact2, contact3);
+        List<Event> event = List.of(event1, event2, event3);
 
         Employee employee = new Employee(
                 "Paweł",
@@ -114,13 +114,13 @@ public class InitialDataConfig implements CommandLineRunner {
                 "rbanks@ecorp.com",
                 "Production Department",
                 company,
-                contactHistory,
+                event,
                 employee
         );
 
-        contact1.setCustomer(customer);
-        contact2.setCustomer(customer);
-        contact3.setCustomer(customer);
+        event1.setCustomer(customer);
+        event2.setCustomer(customer);
+        event3.setCustomer(customer);
         customerRepository.save(customer);
     }
 }

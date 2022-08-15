@@ -1,7 +1,7 @@
 package pl.mateuszkolodziejczyk.simplecrm.exception;
 
 import pl.mateuszkolodziejczyk.simplecrm.company.exception.CompanyNotFoundException;
-import pl.mateuszkolodziejczyk.simplecrm.contacthistory.exception.ContactHistoryNotFoundException;
+import pl.mateuszkolodziejczyk.simplecrm.event.exception.EventNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CustomerNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.employee.exception.EmployeeNotFoundException;
 
@@ -21,8 +21,8 @@ public class ExceptionSupplier {
         return () -> new CompanyNotFoundException(id);
     }
 
-    public static Supplier<ContactHistoryNotFoundException> contactHistoryNotFound(Long id) {
-        return () -> new ContactHistoryNotFoundException(id);
+    public static Supplier<EventNotFoundException> EventNotFound(Long id) {
+        return () -> new EventNotFoundException(id);
     }
 
 }

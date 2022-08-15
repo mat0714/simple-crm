@@ -13,7 +13,7 @@ public class CompanyResponse {
     private String streetNumber;
     private String streetName;
     private String city;
-    private String state;
+    private String voivodeship;
     private String zipCode;
     private Customer customer;
 }

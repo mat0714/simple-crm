@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.mateuszkolodziejczyk.simplecrm.event.exception.EventNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CustomerNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.employee.exception.EmployeeNotFoundException;
 
@@ -27,6 +28,14 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse employeeNotFound(EmployeeNotFoundException exception) {
+        LOG.error(exception.getMessage(), exception);
+        return new ErrorMessageResponse(exception.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorMessageResponse eventNotFound(EventNotFoundException exception) {
         LOG.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }

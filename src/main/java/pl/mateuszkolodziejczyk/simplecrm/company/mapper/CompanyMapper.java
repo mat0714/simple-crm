@@ -14,7 +14,7 @@ public class CompanyMapper {
                 companyRequest.getStreetNumber(),
                 companyRequest.getStreetName(),
                 companyRequest.getCity(),
-                companyRequest.getState(),
+                companyRequest.getVoivodeship(),
                 companyRequest.getZipCode()
         );
     }
@@ -24,7 +24,7 @@ public class CompanyMapper {
         company.setStreetNumber(companyRequest.getStreetNumber());
         company.setStreetName(companyRequest.getStreetName());
         company.setCity(companyRequest.getCity());
-        company.setState(companyRequest.getState());
+        company.setVoivodeship(companyRequest.getVoivodeship());
         company.setZipCode(companyRequest.getZipCode());
         return company;
     }
@@ -36,7 +36,7 @@ public class CompanyMapper {
                 company.getStreetNumber(),
                 company.getStreetName(),
                 company.getCity(),
-                company.getState(),
+                company.getVoivodeship(),
                 company.getZipCode(),
                 company.getCustomer()
         );

@@ -1,6 +1,7 @@
 package pl.mateuszkolodziejczyk.simplecrm.company.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +23,10 @@ public class Company {
     private String streetNumber;
     private String streetName;
     private String city;
-    private String state;
+    private String voivodeship;
     private String zipCode;
     @OneToOne(mappedBy = "company")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIgnore
     private Customer customer;
 
     public Company(String name, String streetNumber, String streetName, String city, String state, String zipCode) {
@@ -33,7 +34,7 @@ public class Company {
         this.streetNumber = streetNumber;
         this.streetName = streetName;
         this.city = city;
-        this.state = state;
+        this.voivodeship = state;
         this.zipCode = zipCode;
     }
 }

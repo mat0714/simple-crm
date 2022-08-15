@@ -1,7 +1,6 @@
-package pl.mateuszkolodziejczyk.simplecrm.contacthistory.domain;
+package pl.mateuszkolodziejczyk.simplecrm.event.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,11 @@ import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name = "events")
 @Getter
 @Setter
 @NoArgsConstructor
-public class ContactHistory {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +21,16 @@ public class ContactHistory {
     private LocalDate date;
     private String details;
     @ManyToOne
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIgnore
     private Customer customer;
 
-    public ContactHistory(LocalDate date, String details, Customer customer) {
+    public Event(LocalDate date, String details, Customer customer) {
         this.date = date;
         this.details = details;
         this.customer = customer;
     }
 
-    public ContactHistory(LocalDate date, String details) {
+    public Event(LocalDate date, String details) {
         this.date = date;
         this.details = details;
     }

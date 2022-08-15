@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.contacthistory.api.request;
+package pl.mateuszkolodziejczyk.simplecrm.event.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,9 +8,10 @@ import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class ContactHistoryRequest {
+public class EventResponse {
 
-    private LocalDate Date;
+    private Long id;
+    private LocalDate date;
     private String details;
     private Customer customer;
 }

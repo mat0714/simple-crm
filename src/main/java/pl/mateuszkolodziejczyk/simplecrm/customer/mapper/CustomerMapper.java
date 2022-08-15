@@ -16,7 +16,7 @@ public class CustomerMapper {
                 customerRequest.getEmail(),
                 customerRequest.getDepartment(),
                 customerRequest.getCompany(),
-                customerRequest.getContactHistory(),
+                customerRequest.getEvent(),
                 customerRequest.getEmployee()
         );
     }
@@ -40,7 +40,7 @@ public class CustomerMapper {
                 customer.getEmail(),
                 customer.getDepartment(),
                 customer.getCompany(),
-                customer.getContactHistory(),
+                customer.getEvent(),
                 customer.getEmployee()
         );
     }
