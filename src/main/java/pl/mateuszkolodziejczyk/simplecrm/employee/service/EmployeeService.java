@@ -2,12 +2,13 @@ package pl.mateuszkolodziejczyk.simplecrm.employee.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
 import pl.mateuszkolodziejczyk.simplecrm.employee.repository.EmployeeRepository;
-import pl.mateuszkolodziejczyk.simplecrm.employee.support.EmployeeMapper;
-import pl.mateuszkolodziejczyk.simplecrm.employee.support.EmployeeExceptionSupplier;
+import pl.mateuszkolodziejczyk.simplecrm.employee.mapper.EmployeeMapper;
+import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class EmployeeService {
 
     public EmployeeResponse findEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
-                EmployeeExceptionSupplier.itemNotFound(id));
+                ExceptionSupplier.employeeNotFound(id));
         return employeeMapper.toEmployeeResponse(employee);
     }
 
@@ -37,14 +38,18 @@ public class EmployeeService {
 
     public EmployeeResponse updateEmployee(Long id, EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
-                EmployeeExceptionSupplier.itemNotFound(id));
+                ExceptionSupplier.employeeNotFound(id));
         employeeRepository.save(employeeMapper.toEmployee(employee, employeeRequest));
         return employeeMapper.toEmployeeResponse(employee);
     }
 
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
-                EmployeeExceptionSupplier.itemNotFound(id));
+                ExceptionSupplier.employeeNotFound(id));
+        boolean employeeHasCustomers = !CollectionUtils.isEmpty(employee.getCustomers());
+        if (employeeHasCustomers) {
+            throw ExceptionSupplier.canNotDeleteEmployee();
+        }
         employeeRepository.delete(employee);
     }
 }

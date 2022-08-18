@@ -21,8 +21,15 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeRequests()
+                .antMatchers("/console/**").permitAll()
+                .antMatchers("/api/companies").hasRole(MANAGER.name())
+                .antMatchers("/api/customers").hasRole(MANAGER.name())
                 .antMatchers("/api/employees").hasRole(MANAGER.name())
+                .antMatchers("/api/events").hasRole(MANAGER.name())
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

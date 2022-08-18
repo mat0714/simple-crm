@@ -1,4 +1,4 @@
-package pl.mateuszkolodziejczyk.simplecrm.employee.support;
+package pl.mateuszkolodziejczyk.simplecrm.employee.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
@@ -14,8 +14,7 @@ public class EmployeeMapper {
                 employeeRequest.getSurname(),
                 employeeRequest.getPhone(),
                 employeeRequest.getEmail(),
-                employeeRequest.getDepartment(),
-                employeeRequest.getCustomers()
+                employeeRequest.getDepartment()
         );
     }
 

@@ -3,7 +3,7 @@ package pl.mateuszkolodziejczyk.simplecrm.employee.api.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Customer;
+import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 
 import java.util.List;
 
@@ -16,6 +16,4 @@ public class EmployeeRequest {
     private String phone;
     private String email;
     private String department;
-    private List<Customer> customers;
-
 }
