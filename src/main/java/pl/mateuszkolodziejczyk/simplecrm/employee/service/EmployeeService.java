@@ -2,6 +2,7 @@ package pl.mateuszkolodziejczyk.simplecrm.employee.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
@@ -45,6 +46,10 @@ public class EmployeeService {
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
                 ExceptionSupplier.employeeNotFound(id));
+        boolean employeeHasCustomers = !CollectionUtils.isEmpty(employee.getCustomers());
+        if (employeeHasCustomers) {
+            throw ExceptionSupplier.canNotDeleteEmployee();
+        }
         employeeRepository.delete(employee);
     }
 }

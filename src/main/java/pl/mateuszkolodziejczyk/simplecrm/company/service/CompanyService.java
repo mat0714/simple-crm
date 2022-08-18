@@ -45,6 +45,10 @@ public class CompanyService {
     public void deleteCompany(Long id) {
         Company company = companyRepository.findById(id).orElseThrow(
                 ExceptionSupplier.companyNotFound(id));
+        boolean companyHasCustomer = company.getCustomer() != null;
+        if (companyHasCustomer) {
+            throw ExceptionSupplier.canNotDeleteCompany();
+        }
         companyRepository.delete(company);
     }
 }
