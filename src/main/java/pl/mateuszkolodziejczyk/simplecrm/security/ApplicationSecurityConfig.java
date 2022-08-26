@@ -3,6 +3,7 @@ package pl.mateuszkolodziejczyk.simplecrm.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,16 +21,19 @@ public class ApplicationSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        String[] paths = {"/api/companies/**", "/api/customers/**", "/api/employees/**", "/api/events/**"};
+
         http
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/console/**").permitAll()
-                .antMatchers("/api/companies").hasRole(MANAGER.name())
-                .antMatchers("/api/customers").hasRole(MANAGER.name())
-                .antMatchers("/api/employees").hasRole(MANAGER.name())
-                .antMatchers("/api/events").hasRole(MANAGER.name())
+                .antMatchers(HttpMethod.GET,paths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
+                .antMatchers(HttpMethod.POST ,paths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
+                .antMatchers(HttpMethod.PUT, paths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
+                .antMatchers(HttpMethod.DELETE ,paths).hasRole(MANAGER.name())
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
