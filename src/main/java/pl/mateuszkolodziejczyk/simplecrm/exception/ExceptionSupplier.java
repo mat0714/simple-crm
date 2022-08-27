@@ -6,6 +6,7 @@ import pl.mateuszkolodziejczyk.simplecrm.employee.exception.CanNotDeleteEmployee
 import pl.mateuszkolodziejczyk.simplecrm.event.exception.EventNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CustomerNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.employee.exception.EmployeeNotFoundException;
+import pl.mateuszkolodziejczyk.simplecrm.user.exception.UserNotFoundException;
 
 import java.util.function.Supplier;
 
@@ -23,8 +24,12 @@ public class ExceptionSupplier {
         return () -> new CompanyNotFoundException(id);
     }
 
-    public static Supplier<EventNotFoundException> EventNotFound(Long id) {
+    public static Supplier<EventNotFoundException> eventNotFound(Long id) {
         return () -> new EventNotFoundException(id);
+    }
+
+    public static Supplier<UserNotFoundException> userNotFound(String username) {
+        return () -> new UserNotFoundException(username);
     }
 
     public static CanNotDeleteCompanyException canNotDeleteCompany() {

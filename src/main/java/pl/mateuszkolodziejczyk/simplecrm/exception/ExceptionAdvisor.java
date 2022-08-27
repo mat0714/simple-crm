@@ -12,6 +12,7 @@ import pl.mateuszkolodziejczyk.simplecrm.employee.exception.CanNotDeleteEmployee
 import pl.mateuszkolodziejczyk.simplecrm.event.exception.EventNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CustomerNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.employee.exception.EmployeeNotFoundException;
+import pl.mateuszkolodziejczyk.simplecrm.user.exception.UserNotFoundException;
 
 @ControllerAdvice
 public class ExceptionAdvisor {
@@ -38,6 +39,14 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse eventNotFound(EventNotFoundException exception) {
+        LOG.error(exception.getMessage(), exception);
+        return new ErrorMessageResponse(exception.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorMessageResponse userNotFound(UserNotFoundException exception) {
         LOG.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
