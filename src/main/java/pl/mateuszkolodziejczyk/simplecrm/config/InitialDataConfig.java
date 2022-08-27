@@ -2,13 +2,16 @@ package pl.mateuszkolodziejczyk.simplecrm.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.mateuszkolodziejczyk.simplecrm.company.domain.Company;
 import pl.mateuszkolodziejczyk.simplecrm.event.domain.Event;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 import pl.mateuszkolodziejczyk.simplecrm.customer.repository.CustomerRepository;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
-import pl.mateuszkolodziejczyk.simplecrm.employee.repository.EmployeeRepository;
+import pl.mateuszkolodziejczyk.simplecrm.user.UserRole;
+import pl.mateuszkolodziejczyk.simplecrm.user.domain.User;
+import pl.mateuszkolodziejczyk.simplecrm.user.repository.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,16 +20,19 @@ import java.util.List;
 @Component
 public class InitialDataConfig implements CommandLineRunner {
 
-    private final EmployeeRepository employeeRepository;
     private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void run(String... args) throws Exception {
-        insertFirstDataCollection();
-        insertSecondDataCollection();
+    public void run(String... args) {
+        saveFirstCustomerWithData();
+        saveSecondCustomerWithData();
+        saveFirstUser();
+        saveSecondUser();
     }
 
-    private void insertFirstDataCollection() {
+    private void saveFirstCustomerWithData() {
         Company company = new Company(
                 "E CORP",
                 "5",
@@ -72,7 +78,7 @@ public class InitialDataConfig implements CommandLineRunner {
         customerRepository.save(customer);
     }
 
-    private void insertSecondDataCollection() {
+    private void saveSecondCustomerWithData() {
         Company company = new Company(
                 "S CORP",
                 "100",
@@ -122,5 +128,31 @@ public class InitialDataConfig implements CommandLineRunner {
         event2.setCustomer(customer);
         event3.setCustomer(customer);
         customerRepository.save(customer);
+    }
+
+    private void saveFirstUser() {
+        List<String> roles = List.of("ROLE_" + UserRole.MANAGER.name());
+        User user = new User(
+                "Manager",
+                passwordEncoder.encode("Password123"),
+                roles,
+                true,
+                true,
+                true,
+                true);
+        userRepository.save(user);
+    }
+
+    private void saveSecondUser() {
+        List<String> roles = List.of("ROLE_" + UserRole.EMPLOYEE.name());
+        User user = new User(
+                "Employee",
+                passwordEncoder.encode("Password123"),
+                roles,
+                true,
+                true,
+                true,
+                true);
+        userRepository.save(user);
     }
 }

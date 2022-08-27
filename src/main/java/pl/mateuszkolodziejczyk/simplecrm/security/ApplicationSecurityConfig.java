@@ -5,13 +5,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
+import pl.mateuszkolodziejczyk.simplecrm.user.repository.UserRepository;
 
-import static pl.mateuszkolodziejczyk.simplecrm.security.ApplicationUserRole.*;
+import static pl.mateuszkolodziejczyk.simplecrm.user.UserRole.*;
 
 @Configuration
 @RequiredArgsConstructor
@@ -42,18 +44,13 @@ public class ApplicationSecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails manager = User.builder()
-                .username("Manager")
-                .password(passwordEncoder.encode("Password123"))
-                .roles(MANAGER.name())
-                .build();
-
-        UserDetails employee = User.builder()
-                .username("employee")
-                .password(passwordEncoder.encode("Password123"))
-                .roles(EMPLOYEE.name())
-                .build();
-        return new InMemoryUserDetailsManager(manager, employee);
+    UserDetailsService customUserDetailsService(UserRepository userRepository) {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return userRepository.findByUsername(username)
+                        .orElseThrow(ExceptionSupplier.userNotFound(username));
+            }
+        };
     }
 }
