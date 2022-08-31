@@ -84,11 +84,15 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return isAccountNonExpired() == user.isAccountNonExpired() && isAccountNonLocked() == user.isAccountNonLocked() && isCredentialsNonExpired() == user.isCredentialsNonExpired() && isEnabled() == user.isEnabled() && id.equals(user.id) && getUsername().equals(user.getUsername()) && getPassword().equals(user.getPassword()) && roles.equals(user.roles);
+        return isAccountNonExpired() == user.isAccountNonExpired() && isAccountNonLocked() == user.isAccountNonLocked()
+                && isCredentialsNonExpired() == user.isCredentialsNonExpired() && isEnabled() == user.isEnabled()
+                && id.equals(user.id) && getUsername().equals(user.getUsername())
+                && getPassword().equals(user.getPassword()) && roles.equals(user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, getUsername(), getPassword(), roles, isAccountNonExpired(), isAccountNonLocked(), isCredentialsNonExpired(), isEnabled());
+        return Objects.hash(id, getUsername(), getPassword(), roles, isAccountNonExpired(), isAccountNonLocked(),
+                isCredentialsNonExpired(), isEnabled());
     }
 }
