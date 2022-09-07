@@ -1,7 +1,6 @@
 package pl.mateuszkolodziejczyk.simplecrm.security.jwt;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,11 +10,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 
@@ -24,7 +20,7 @@ import static java.util.stream.Collectors.joining;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtTokenProvider {
+public class JwtProvider {
 
     private static final String AUTHORITIES_KEY = "roles";
     private final JwtConfig jwtConfig;
@@ -42,5 +38,31 @@ public class JwtTokenProvider {
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationDays())))
                 .signWith(secretKey)
                 .compact();
+    }
+
+    public Authentication getAuthentication(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+
+        Object authoritiesClaim = claims.get(AUTHORITIES_KEY);
+
+        Collection<? extends GrantedAuthority> authorities = authoritiesClaim == null ? AuthorityUtils.NO_AUTHORITIES
+                : AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesClaim.toString());
+
+        User principal = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts
+                    .parserBuilder().setSigningKey(secretKey).build()
+                    .parseClaimsJws(token);
+            log.info("Valid token. Expiration date: {}", claims.getBody().getExpiration());
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            log.error("Invalid token: {}", e.getMessage());
+        }
+        return false;
     }
 }

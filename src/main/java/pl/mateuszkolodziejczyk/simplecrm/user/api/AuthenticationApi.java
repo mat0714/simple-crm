@@ -14,29 +14,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.mateuszkolodziejczyk.simplecrm.security.jwt.JwtConfig;
-import pl.mateuszkolodziejczyk.simplecrm.security.jwt.JwtTokenProvider;
-import pl.mateuszkolodziejczyk.simplecrm.user.api.request.UsernameAndPasswordAuthenticationRequest;
-import pl.mateuszkolodziejczyk.simplecrm.user.repository.UserRepository;
+import pl.mateuszkolodziejczyk.simplecrm.security.jwt.JwtProvider;
+import pl.mateuszkolodziejczyk.simplecrm.user.api.request.AuthenticationRequest;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class UserApi {
+public class AuthenticationApi {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
     private final JwtConfig jwtConfig;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(
-            @RequestBody UsernameAndPasswordAuthenticationRequest usernameAndPasswordAuthenticationRequest) {
+            @RequestBody AuthenticationRequest authenticationRequest) {
 
         try {
-            String username = usernameAndPasswordAuthenticationRequest.getUsername();
-            String password = usernameAndPasswordAuthenticationRequest.getPassword();
+            String username = authenticationRequest.getUsername();
+            String password = authenticationRequest.getPassword();
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
-            String token = jwtTokenProvider.createToken(authentication);
+            String token = jwtProvider.createToken(authentication);
             HttpHeaders header = new HttpHeaders();
             header.set(HttpHeaders.AUTHORIZATION, jwtConfig.getTokenPrefix() + token);
             return ResponseEntity.status(HttpStatus.OK).headers(header).build();

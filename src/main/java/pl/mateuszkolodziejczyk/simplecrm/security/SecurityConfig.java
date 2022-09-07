@@ -14,20 +14,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
+import pl.mateuszkolodziejczyk.simplecrm.security.jwt.JwtConfig;
+import pl.mateuszkolodziejczyk.simplecrm.security.jwt.JwtAuthenticationFilter;
+import pl.mateuszkolodziejczyk.simplecrm.security.jwt.JwtProvider;
 import pl.mateuszkolodziejczyk.simplecrm.user.repository.UserRepository;
 
 import static pl.mateuszkolodziejczyk.simplecrm.user.UserRole.*;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationSecurityConfig {
+public class SecurityConfig {
 
-    private final PasswordEncoder passwordEncoder;
+    private final JwtConfig jwtConfig;
+    private final JwtProvider jwtProvider;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,7 +54,7 @@ public class ApplicationSecurityConfig {
                     .antMatchers(HttpMethod.DELETE ,paths).hasRole(MANAGER.name())
                     .anyRequest().authenticated()
                 .and()
-//                .addFilterBefore(new JwtTokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtConfig, jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .httpBasic();
 
         return http.build();
@@ -85,5 +90,10 @@ public class ApplicationSecurityConfig {
             return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
         };
         return authenticationManager;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
     }
 }
