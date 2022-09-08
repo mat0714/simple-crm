@@ -1,10 +1,12 @@
 package pl.mateuszkolodziejczyk.simplecrm.security.jwt;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "application.jwt")
-@Data
+@Getter
+@Setter
 public class JwtConfig {
 
     private String secretKey;

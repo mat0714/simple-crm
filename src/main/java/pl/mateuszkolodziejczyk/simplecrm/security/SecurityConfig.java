@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -72,24 +70,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager customAuthenticationManager(UserDetailsService userDetailsService, PasswordEncoder encoder) {
-        AuthenticationManager authenticationManager = authentication -> {
-            String username = authentication.getPrincipal() + "";
-            String password = authentication.getCredentials() + "";
-
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-
-            if (!encoder.matches(password, user.getPassword())) {
-                throw new BadCredentialsException("Bad credentials");
-            }
-
-            if (!user.isEnabled()) {
-                throw new DisabledException("User account is not active");
-            }
-
-            return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
-        };
-        return authenticationManager;
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
