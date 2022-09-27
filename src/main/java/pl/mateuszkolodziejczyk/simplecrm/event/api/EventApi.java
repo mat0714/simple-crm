@@ -16,18 +16,17 @@ public class EventApi {
     private final EventService eventService;
 
     @PostMapping("/{customerId}")
-    public ResponseEntity<EventResponse> saveEvent(
-            @PathVariable Long customerId,
-            @RequestBody EventRequest eventRequest) {
-        EventResponse eventResponse = eventService.saveEvent(customerId, eventRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventResponse);
+    public ResponseEntity<Long> saveEvent(
+            @PathVariable Long customerId, @RequestBody EventRequest eventRequest) {
+        Long id = eventService.saveEvent(customerId, eventRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
     @PutMapping("/{eventId}")
-    public ResponseEntity<EventResponse> updateEvent(
+    public ResponseEntity<Void> updateEvent(
             @PathVariable Long eventId, @RequestBody EventRequest eventRequest) {
-        EventResponse eventResponse = eventService.updateEvent(eventId, eventRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(eventResponse);
+        eventService.updateEvent(eventId, eventRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{eventId}")

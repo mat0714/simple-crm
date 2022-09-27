@@ -18,9 +18,9 @@ public class CustomerApi {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody CustomerRequest customerRequest) {
-        CustomerResponse customerResponse = customerService.saveCustomer(customerRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerResponse);
+    public ResponseEntity<Long> saveCustomer(@RequestBody CustomerRequest customerRequest) {
+        Long id = customerService.saveCustomer(customerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
     @GetMapping("/{customerId}")
@@ -36,10 +36,10 @@ public class CustomerApi {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<CustomerResponse> updateCustomer(
+    public ResponseEntity<Void> updateCustomer(
             @PathVariable Long customerId, @RequestBody CustomerRequest customerRequest) {
-        CustomerResponse customerResponse = customerService.updateCustomer(customerId, customerRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(customerResponse);
+        customerService.updateCustomer(customerId, customerRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{customerId}")
@@ -49,9 +49,9 @@ public class CustomerApi {
     }
 
     @PutMapping("/{customerId}/{employeeId}")
-    public ResponseEntity<CustomerResponse> assignEmployeeToCustomer(
+    public ResponseEntity<Void> assignEmployeeToCustomer(
             @PathVariable Long customerId, @PathVariable Long employeeId) {
-        CustomerResponse customerResponse = customerService.assignEmployeeToCustomer(customerId, employeeId);
-        return ResponseEntity.status(HttpStatus.OK).body(customerResponse);
+        customerService.assignEmployeeToCustomer(customerId, employeeId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

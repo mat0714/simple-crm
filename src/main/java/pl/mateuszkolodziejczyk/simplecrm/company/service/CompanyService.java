@@ -19,9 +19,9 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
 
-    public CompanyResponse saveCompany(CompanyRequest companyRequest) {
+    public Long saveCompany(CompanyRequest companyRequest) {
         Company company = companyRepository.save(companyMapper.toCompany(companyRequest));
-        return companyMapper.toCompanyResponse(company);
+        return company.getId();
     }
 
     public CompanyResponse findCompanyById(Long id) {
@@ -35,11 +35,10 @@ public class CompanyService {
                 .map(companyMapper::toCompanyResponse).collect(Collectors.toList());
     }
 
-    public CompanyResponse updateCompany(Long id, CompanyRequest companyRequest) {
+    public void updateCompany(Long id, CompanyRequest companyRequest) {
         Company company = companyRepository.findById(id).orElseThrow(
                 ExceptionSupplier.companyNotFound(id));
         companyRepository.save(companyMapper.toCompany(company, companyRequest));
-        return companyMapper.toCompanyResponse(company);
     }
 
     public void deleteCompany(Long id) {

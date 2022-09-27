@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.mateuszkolodziejczyk.simplecrm.company.exception.CanNotDeleteCompanyException;
+import pl.mateuszkolodziejczyk.simplecrm.company.exception.CompanyNotFoundException;
+import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CanNotDeleteCustomerException;
 import pl.mateuszkolodziejczyk.simplecrm.employee.exception.CanNotDeleteEmployeeException;
 import pl.mateuszkolodziejczyk.simplecrm.event.exception.EventNotFoundException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CustomerNotFoundException;
@@ -18,6 +20,14 @@ import pl.mateuszkolodziejczyk.simplecrm.user.exception.UserNotFoundException;
 public class ExceptionAdvisor {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionAdvisor.class);
+
+    @ExceptionHandler(CompanyNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorMessageResponse companyNotFound(CompanyNotFoundException exception) {
+        LOG.error(exception.getMessage(), exception);
+        return new ErrorMessageResponse(exception.getLocalizedMessage());
+    }
 
     @ExceptionHandler(CustomerNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -55,6 +65,14 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorMessageResponse canNotDeleteCompanyException(CanNotDeleteCompanyException exception) {
+        LOG.error(exception.getMessage(), exception);
+        return new ErrorMessageResponse(exception.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(CanNotDeleteCustomerException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public ErrorMessageResponse canNotDeleteCustomerException(CanNotDeleteCustomerException exception) {
         LOG.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
