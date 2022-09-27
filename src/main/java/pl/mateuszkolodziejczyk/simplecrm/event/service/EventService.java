@@ -19,18 +19,17 @@ public class EventService {
     private final EventMapper eventMapper;
     private final CustomerRepository customerRepository;
 
-    public EventResponse saveEvent(Long customerId, EventRequest eventRequest) {
+    public Long saveEvent(Long customerId, EventRequest eventRequest) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ExceptionSupplier.customerNotFound(customerId));
         Event event = eventRepository.save(eventMapper.toEvent(customer, eventRequest));
-        return eventMapper.toEventResponse(event);
+        return event.getId();
     }
 
-    public EventResponse updateEvent(Long id, EventRequest eventRequest) {
+    public void updateEvent(Long id, EventRequest eventRequest) {
         Event event = eventRepository.findById(id).orElseThrow(
                 ExceptionSupplier.eventNotFound(id));
         eventRepository.save(eventMapper.toEvent(event, eventRequest));
-        return eventMapper.toEventResponse(event);
     }
 
     public void deleteEvent(Long id) {

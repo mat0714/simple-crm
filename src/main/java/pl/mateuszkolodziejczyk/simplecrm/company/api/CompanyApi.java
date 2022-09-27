@@ -18,9 +18,9 @@ public class CompanyApi {
     private final CompanyService companyService;
 
     @PostMapping
-    public ResponseEntity<CompanyResponse> saveCompany(@RequestBody CompanyRequest companyRequest) {
-        CompanyResponse companyResponse = companyService.saveCompany(companyRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(companyResponse);
+    public ResponseEntity<Long> saveCompany(@RequestBody CompanyRequest companyRequest) {
+        Long id = companyService.saveCompany(companyRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
     @GetMapping("/{id}")
@@ -36,10 +36,10 @@ public class CompanyApi {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CompanyResponse> updateCompany(
+    public ResponseEntity<Void> updateCompany(
             @PathVariable Long id, @RequestBody CompanyRequest companyRequest) {
-        CompanyResponse companyResponse = companyService.updateCompany(id, companyRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(companyResponse);
+        companyService.updateCompany(id, companyRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{id}")

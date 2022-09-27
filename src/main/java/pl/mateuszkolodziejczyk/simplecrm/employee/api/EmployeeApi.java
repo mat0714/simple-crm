@@ -1,5 +1,6 @@
 package pl.mateuszkolodziejczyk.simplecrm.employee.api;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,19 +12,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
+@RequiredArgsConstructor
 public class EmployeeApi {
 
     private final EmployeeService employeeService;
 
-    public EmployeeApi(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
     @PostMapping
-    public ResponseEntity<EmployeeResponse> saveEmployee(@RequestBody EmployeeRequest employeeRequest) {
-
-        EmployeeResponse employeeResponse = employeeService.saveEmployee(employeeRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponse);
+    public ResponseEntity<Long> saveEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        Long id = employeeService.saveEmployee(employeeRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
     @GetMapping("/{id}")
@@ -39,10 +36,10 @@ public class EmployeeApi {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeResponse> updateEmployee(
+    public ResponseEntity<Void> updateEmployee(
             @PathVariable Long id, @RequestBody EmployeeRequest employeeRequest) {
-        EmployeeResponse employeeResponse = employeeService.updateEmployee(id, employeeRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(employeeResponse);
+        employeeService.updateEmployee(id, employeeRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{id}")

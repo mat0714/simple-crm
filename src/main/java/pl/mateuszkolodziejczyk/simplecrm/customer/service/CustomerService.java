@@ -2,6 +2,7 @@ package pl.mateuszkolodziejczyk.simplecrm.customer.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerResponse;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
@@ -22,9 +23,9 @@ public class CustomerService {
     private final EmployeeRepository employeeRepository;
     private final CustomerMapper customerMapper;
 
-    public CustomerResponse saveCustomer(CustomerRequest customerRequest) {
+    public Long saveCustomer(CustomerRequest customerRequest) {
         Customer customer = customerRepository.save(customerMapper.toCustomer(customerRequest));
-        return customerMapper.toCustomerResponse(customer);
+        return customer.getId();
     }
 
     public CustomerResponse findCustomerById(Long customerId) {
@@ -38,26 +39,29 @@ public class CustomerService {
                 .map(customerMapper::toCustomerResponse).collect(Collectors.toList());
     }
 
-    public CustomerResponse updateCustomer(Long customerId, CustomerRequest customerRequest) {
+    public void updateCustomer(Long customerId, CustomerRequest customerRequest) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ExceptionSupplier.customerNotFound(customerId));
         customerRepository.save(customerMapper.toCustomer(customer, customerRequest));
-        return customerMapper.toCustomerResponse(customer);
     }
 
     public void deleteCustomer(Long customerId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ExceptionSupplier.customerNotFound(customerId));
+        boolean customerHasRelationship =
+                !CollectionUtils.isEmpty(customer.getEvent()) || customer.getEmployee() != null;
+        if (customerHasRelationship) {
+            throw ExceptionSupplier.canNotDeleteCustomer();
+        }
         customerRepository.delete(customer);
     }
 
-    public CustomerResponse assignEmployeeToCustomer(Long customerId, Long employeeId) {
+    public void assignEmployeeToCustomer(Long customerId, Long employeeId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ExceptionSupplier.customerNotFound(customerId));
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(
                 ExceptionSupplier.employeeNotFound(employeeId));
         customer.setEmployee(employee);
         customerRepository.save(customer);
-        return customerMapper.toCustomerResponse(customer);
     }
 }

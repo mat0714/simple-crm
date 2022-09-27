@@ -20,9 +20,9 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
 
-    public EmployeeResponse saveEmployee(EmployeeRequest employeeRequest) {
+    public Long saveEmployee(EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.save(employeeMapper.toEmployee(employeeRequest));
-        return employeeMapper.toEmployeeResponse(employee);
+        return employee.getId();
     }
 
     public EmployeeResponse findEmployeeById(Long id) {
@@ -36,11 +36,10 @@ public class EmployeeService {
                 .map(employeeMapper::toEmployeeResponse).collect(Collectors.toList());
     }
 
-    public EmployeeResponse updateEmployee(Long id, EmployeeRequest employeeRequest) {
+    public void updateEmployee(Long id, EmployeeRequest employeeRequest) {
         Employee employee = employeeRepository.findById(id).orElseThrow(
                 ExceptionSupplier.employeeNotFound(id));
         employeeRepository.save(employeeMapper.toEmployee(employee, employeeRequest));
-        return employeeMapper.toEmployeeResponse(employee);
     }
 
     public void deleteEmployee(Long id) {
