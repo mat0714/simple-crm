@@ -38,14 +38,14 @@ class CompanyApiIntegrationTest {
         RestAssured.port = this.port;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
-        //@formatter:off
+        // @formatter:off
         token = given()
-                .body("{\"username\": \"Manager\", \"password\": \"Password123\"}")
-                .contentType(ContentType.JSON)
+                    .body("{\"username\": \"Manager\", \"password\": \"Password123\"}")
+                    .contentType(ContentType.JSON)
                 .when()
-                .post("/api/login")
+                    .post("/api/login")
                 .andReturn().getHeader(HttpHeaders.AUTHORIZATION);
-        //@formatter:on
+        // @formatter:on
 
         log.debug("Generated token: {}", token);
     }
@@ -60,63 +60,57 @@ class CompanyApiIntegrationTest {
 
         authorizationHeader.set(HttpHeaders.AUTHORIZATION, token);
 
-        //@formatter:off
+        // @formatter:off
         RestAssured
                 .given()
-                .body(companyRequestJson)
-                .headers(authorizationHeader)
-                .contentType(ContentType.JSON)
+                    .body(companyRequestJson)
+                    .headers(authorizationHeader)
+                    .contentType(ContentType.JSON)
                 .when()
-                .post("/api/companies")
+                    .post("/api/companies")
                 .then()
-                .statusCode(201)
-                .body("id", Matchers.notNullValue())
-                .body("name", Matchers.equalTo("Company sp. z o.o."))
-                .body("streetNumber", Matchers.equalTo("60"))
-                .body("streetName", Matchers.equalTo("Krakowska"))
-                .body("city", Matchers.equalTo("Gdańsk"))
-                .body("voivodeship", Matchers.equalTo("Pomorskie"))
-                .body("zipCode", Matchers.equalTo("80-017"));
-        //@formatter:on
+                    .statusCode(201)
+                    .body(Matchers.notNullValue());
+        // @formatter:on
     }
 
     @Test
     void shouldFindCompany() {
         authorizationHeader.set(HttpHeaders.AUTHORIZATION, token);
 
-        //@formatter:off
+        // @formatter:off
         RestAssured
                 .given()
-                .pathParam("id", 1)
-                .headers(authorizationHeader)
+                    .pathParam("id", 1)
+                    .headers(authorizationHeader)
                 .when()
-                .get("/api/companies/{id}")
+                    .get("/api/companies/{id}")
                 .then()
-                .statusCode(200)
-                .body("id", Matchers.equalTo(1))
-                .body("name", Matchers.equalTo("E CORP"))
-                .body("streetNumber", Matchers.equalTo("5"))
-                .body("streetName", Matchers.equalTo("Domaniewska"))
-                .body("city", Matchers.equalTo("Warsaw"))
-                .body("voivodeship", Matchers.equalTo("Mazowieckie"))
-                .body("zipCode", Matchers.equalTo("02-672"));
-        //@formatter:on
+                    .statusCode(200)
+                    .body("id", Matchers.equalTo(1))
+                    .body("name", Matchers.equalTo("E CORP"))
+                    .body("streetNumber", Matchers.equalTo("5"))
+                    .body("streetName", Matchers.equalTo("Domaniewska"))
+                    .body("city", Matchers.equalTo("Warsaw"))
+                    .body("voivodeship", Matchers.equalTo("Mazowieckie"))
+                    .body("zipCode", Matchers.equalTo("02-672"));
+        // @formatter:on
     }
 
     @Test
     void shouldFindAllCompanies() {
         authorizationHeader.set(HttpHeaders.AUTHORIZATION, token);
 
-        //@formatter:off
+        // @formatter:off
         RestAssured
                 .given()
-                .headers(authorizationHeader)
+                    .headers(authorizationHeader)
                 .when()
-                .get("/api/companies")
+                    .get("/api/companies")
                 .then()
-                .statusCode(200)
-                .assertThat().body("list.size()", Matchers.equalTo(2));
-        //@formatter:on
+                    .statusCode(200)
+                    .assertThat().body("list.size()", Matchers.equalTo(2));
+        // @formatter:on
     }
 
     @Test
@@ -130,25 +124,18 @@ class CompanyApiIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String companyRequestJson = objectMapper.writeValueAsString(companyRequest);
 
-        //@formatter:off
+        // @formatter:off
         RestAssured
                 .given()
-                .body(companyRequestJson)
-                .contentType(ContentType.JSON)
-                .pathParam("id", 1)
-                .headers(authorizationHeader)
+                    .body(companyRequestJson)
+                    .contentType(ContentType.JSON)
+                    .pathParam("id", 1)
+                    .headers(authorizationHeader)
                 .when()
-                .put("/api/companies/{id}")
+                    .put("/api/companies/{id}")
                 .then()
-                .statusCode(200)
-                .body("id", Matchers.equalTo(1))
-                .body("name", Matchers.equalTo("ADT sp.z o.o."))
-                .body("streetNumber", Matchers.equalTo("60A"))
-                .body("streetName", Matchers.equalTo("Lipowa"))
-                .body("city", Matchers.equalTo("Gdańsk"))
-                .body("voivodeship", Matchers.equalTo("Pomorskie"))
-                .body("zipCode", Matchers.equalTo("80-017"));
-        //@formatter:on
+                    .statusCode(200);
+        // @formatter:on
     }
 
     @Test
@@ -160,17 +147,15 @@ class CompanyApiIntegrationTest {
 
         authorizationHeader.set(HttpHeaders.AUTHORIZATION, token);
 
-        //@formatter:off
+        // @formatter:off
         RestAssured
                 .given()
-                .pathParam("id", id)
-                .headers(authorizationHeader)
+                    .pathParam("id", id)
+                    .headers(authorizationHeader)
                 .when()
-                .delete("/api/companies/{id}")
+                    .delete("/api/companies/{id}")
                 .then()
-                .statusCode(204);
-        //@formatter:on
+                    .statusCode(204);
+        // @formatter:on
     }
-
-
 }
