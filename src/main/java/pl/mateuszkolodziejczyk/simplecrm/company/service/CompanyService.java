@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.mateuszkolodziejczyk.simplecrm.company.api.request.CompanyRequest;
 import pl.mateuszkolodziejczyk.simplecrm.company.api.response.CompanyResponse;
 import pl.mateuszkolodziejczyk.simplecrm.company.domain.Company;
+import pl.mateuszkolodziejczyk.simplecrm.company.exception.CanNotDeleteCompanyException;
 import pl.mateuszkolodziejczyk.simplecrm.company.mapper.CompanyMapper;
 import pl.mateuszkolodziejczyk.simplecrm.company.repository.CompanyRepository;
 import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
@@ -46,7 +47,7 @@ public class CompanyService {
                 ExceptionSupplier.companyNotFound(id));
         boolean companyHasCustomer = company.getCustomer() != null;
         if (companyHasCustomer) {
-            throw ExceptionSupplier.canNotDeleteCompany();
+            throw new CanNotDeleteCompanyException();
         }
         companyRepository.delete(company);
     }

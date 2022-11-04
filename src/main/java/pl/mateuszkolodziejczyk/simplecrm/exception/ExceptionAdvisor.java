@@ -1,7 +1,6 @@
 package pl.mateuszkolodziejczyk.simplecrm.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,15 +16,14 @@ import pl.mateuszkolodziejczyk.simplecrm.employee.exception.EmployeeNotFoundExce
 import pl.mateuszkolodziejczyk.simplecrm.user.exception.UserNotFoundException;
 
 @ControllerAdvice
+@Slf4j
 public class ExceptionAdvisor {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ExceptionAdvisor.class);
 
     @ExceptionHandler(CompanyNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse companyNotFound(CompanyNotFoundException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -33,7 +31,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse customerNotFound(CustomerNotFoundException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -41,7 +39,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse employeeNotFound(EmployeeNotFoundException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -49,7 +47,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse eventNotFound(EventNotFoundException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -57,7 +55,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageResponse userNotFound(UserNotFoundException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -65,7 +63,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorMessageResponse canNotDeleteCompanyException(CanNotDeleteCompanyException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -73,7 +71,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorMessageResponse canNotDeleteCustomerException(CanNotDeleteCustomerException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 
@@ -81,7 +79,7 @@ public class ExceptionAdvisor {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorMessageResponse canNotDeleteEmployeeException(CanNotDeleteEmployeeException exception) {
-        LOG.error(exception.getMessage(), exception);
+        log.error(exception.getMessage(), exception);
         return new ErrorMessageResponse(exception.getLocalizedMessage());
     }
 }
