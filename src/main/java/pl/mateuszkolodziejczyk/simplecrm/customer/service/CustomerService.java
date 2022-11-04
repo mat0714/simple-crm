@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerResponse;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
+import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CanNotDeleteCustomerException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.repository.CustomerRepository;
 import pl.mateuszkolodziejczyk.simplecrm.customer.mapper.CustomerMapper;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
@@ -51,7 +52,7 @@ public class CustomerService {
         boolean customerHasRelationship =
                 !CollectionUtils.isEmpty(customer.getEvent()) || customer.getEmployee() != null;
         if (customerHasRelationship) {
-            throw ExceptionSupplier.canNotDeleteCustomer();
+            throw new CanNotDeleteCustomerException();
         }
         customerRepository.delete(customer);
     }

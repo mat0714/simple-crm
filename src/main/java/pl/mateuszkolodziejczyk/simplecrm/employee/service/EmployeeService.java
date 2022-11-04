@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.request.EmployeeRequest;
 import pl.mateuszkolodziejczyk.simplecrm.employee.api.response.EmployeeResponse;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
+import pl.mateuszkolodziejczyk.simplecrm.employee.exception.CanNotDeleteEmployeeException;
 import pl.mateuszkolodziejczyk.simplecrm.employee.repository.EmployeeRepository;
 import pl.mateuszkolodziejczyk.simplecrm.employee.mapper.EmployeeMapper;
 import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
@@ -47,7 +48,7 @@ public class EmployeeService {
                 ExceptionSupplier.employeeNotFound(id));
         boolean employeeHasCustomers = !CollectionUtils.isEmpty(employee.getCustomers());
         if (employeeHasCustomers) {
-            throw ExceptionSupplier.canNotDeleteEmployee();
+            throw new CanNotDeleteEmployeeException();
         }
         employeeRepository.delete(employee);
     }
