@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,8 +35,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        String[] paths = {"/api/companies/**", "/api/customers/**", "/api/employees/**", "/api/events/**"};
+        String[] apiPaths = {"/api/companies/**", "/api/customers/**", "/api/employees/**", "/api/events/**"};
+        String[] swaggerPaths = {"/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs", "/webjars/**"};
 
         http
                 .csrf().disable()
@@ -44,12 +45,13 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeRequests()
-                    .antMatchers("/console/**").permitAll()
-                    .antMatchers("/api/login").permitAll()
-                    .antMatchers(HttpMethod.GET,paths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
-                    .antMatchers(HttpMethod.POST ,paths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
-                    .antMatchers(HttpMethod.PUT, paths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
-                    .antMatchers(HttpMethod.DELETE ,paths).hasRole(MANAGER.name())
+                .antMatchers("/console/**").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers(swaggerPaths).permitAll()
+                    .antMatchers(HttpMethod.GET,apiPaths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
+                    .antMatchers(HttpMethod.POST ,apiPaths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
+                    .antMatchers(HttpMethod.PUT, apiPaths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
+                    .antMatchers(HttpMethod.DELETE ,apiPaths).hasRole(MANAGER.name())
                     .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtConfig, jwtProvider), UsernamePasswordAuthenticationFilter.class)
