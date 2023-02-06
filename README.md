@@ -13,5 +13,19 @@ Application is secured. Some actions are allowed only by proper user. There are 
 
 Project implements JSON Web Token to securily transmit information between parties.
 
+## Prerequisites
+- Docker 20
+
+## Build
+Clone the source code from Github:
+```
+https://github.com/mat0714/simple-crm
+```
+Open terminal, and switch to the root folder of the project. Run following command to build the whole project:
+```
+docker compose up
+```
+After above steps application and MySQL database should be up and running.
+
 ## Technologies
 Java17, Maven, Spring: Boot, Data, Security, Swagger, Lombok, JUnit, Mockito, Rest Assured, AssertJ, Hamcrest, Logback
