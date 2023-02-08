@@ -22,15 +22,15 @@ import java.util.Optional;
 class CompanyServiceTest {
 
     @Mock
-    CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
     @Mock
-    CompanyMapper companyMapper;
+    private CompanyMapper companyMapper;
     @InjectMocks
-    CompanyService companyService;
+    private CompanyService companyService;
 
-    CompanyRequest companyRequest;
-    Company company;
-    CompanyResponse companyResponse;
+    private CompanyRequest companyRequest;
+    private Company company;
+    private CompanyResponse companyResponse;
 
     @BeforeEach
     void setUp() {

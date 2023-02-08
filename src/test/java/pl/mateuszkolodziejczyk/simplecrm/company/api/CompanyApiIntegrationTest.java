@@ -25,13 +25,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 class CompanyApiIntegrationTest {
 
     @Autowired
-    CompanyRepository companyRepository;
-
-    String token;
+    private CompanyRepository companyRepository;
 
     @Value("${local.server.port}")
     private int port;
     private final HttpHeaders authorizationHeader = new HttpHeaders();
+    private String token;
 
     @BeforeEach
     void setup() {
