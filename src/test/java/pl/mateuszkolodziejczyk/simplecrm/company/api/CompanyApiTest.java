@@ -3,10 +3,9 @@ package pl.mateuszkolodziejczyk.simplecrm.company.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
@@ -34,21 +33,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         excludeAutoConfiguration = {
                 UserDetailsServiceAutoConfiguration.class, SecurityAutoConfiguration.class
         })
-@Slf4j
+
 class CompanyApiTest {
 
     @MockBean
-    CompanyService companyService;
+    private CompanyService companyService;
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-    CompanyRequest companyRequest;
-    CompanyResponse companyResponse;
-    CompanyResponse secondCompanyResponse;
-    String companyRequestJson;
+    private static CompanyRequest companyRequest;
+    private static String companyRequestJson;
+    private static CompanyResponse companyResponse;
+    private static CompanyResponse secondCompanyResponse;
 
-    @BeforeEach
-    void setup() throws JsonProcessingException {
+    @BeforeAll
+    static void setup() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         companyRequest = new CompanyRequest(
                 "Company sp. z o.o.", "60", "Krakowska", "Gdańsk",

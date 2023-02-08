@@ -14,7 +14,6 @@ import pl.mateuszkolodziejczyk.simplecrm.employee.repository.EmployeeRepository;
 import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

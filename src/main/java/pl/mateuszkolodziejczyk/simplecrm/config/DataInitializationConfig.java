@@ -23,6 +23,7 @@ public class DataInitializationConfig implements CommandLineRunner {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     private final String fistCustomerName = "John";
     private final String firstCustomerSurname = "Doe";
 
