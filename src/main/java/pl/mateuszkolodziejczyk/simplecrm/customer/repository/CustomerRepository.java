@@ -6,4 +6,6 @@ import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
+    Boolean existsByNameAndSurname(String name, String surname);
 }

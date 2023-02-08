@@ -1,6 +1,6 @@
 package pl.mateuszkolodziejczyk.simplecrm.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,23 +16,28 @@ import pl.mateuszkolodziejczyk.simplecrm.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Component
-public class InitialDataConfig implements CommandLineRunner {
+public class DataInitializationConfig implements CommandLineRunner {
 
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final String fistCustomerName = "John";
+    private final String firstCustomerSurname = "Doe";
 
     @Override
     public void run(String... args) {
-        saveFirstCustomerWithData();
-        saveSecondCustomerWithData();
-        saveFirstUser();
-        saveSecondUser();
+        Boolean hasDatabaseInitialData = customerRepository.existsByNameAndSurname(fistCustomerName, firstCustomerSurname);
+        if(!hasDatabaseInitialData) {
+            saveFirstDataSet();
+            saveSecondDataSet();
+            saveFirstUser();
+            saveSecondUser();
+        }
     }
 
-    private void saveFirstCustomerWithData() {
+    private void saveFirstDataSet() {
         Company company = new Company(
                 "E CORP",
                 "5",
@@ -63,8 +68,8 @@ public class InitialDataConfig implements CommandLineRunner {
         );
 
         Customer customer = new Customer(
-                "John",
-                "Doe",
+                fistCustomerName,
+                firstCustomerSurname,
                 "+48 555 555 555",
                 "jdoe@ecorp.com",
                 "R&D",
@@ -78,7 +83,7 @@ public class InitialDataConfig implements CommandLineRunner {
         customerRepository.save(customer);
     }
 
-    private void saveSecondCustomerWithData() {
+    private void saveSecondDataSet() {
         Company company = new Company(
                 "S CORP",
                 "100",
