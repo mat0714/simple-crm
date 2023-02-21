@@ -36,8 +36,7 @@ public class CompanyApi {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCompany(
-            @PathVariable Long id, @RequestBody CompanyRequest companyRequest) {
+    public ResponseEntity<Void> updateCompany(@PathVariable Long id, @RequestBody CompanyRequest companyRequest) {
         companyService.updateCompany(id, companyRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

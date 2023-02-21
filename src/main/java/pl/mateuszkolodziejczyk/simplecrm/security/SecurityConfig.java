@@ -41,11 +41,8 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers().frameOptions().disable()
-                .and()
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeRequests()
-                .antMatchers("/console/**").permitAll()
                 .antMatchers("/api/login").permitAll()
                 .antMatchers(swaggerPaths).permitAll()
                     .antMatchers(HttpMethod.GET,apiPaths).hasAnyRole(MANAGER.name(), EMPLOYEE.name())
