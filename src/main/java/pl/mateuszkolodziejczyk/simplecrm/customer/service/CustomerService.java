@@ -1,10 +1,13 @@
 package pl.mateuszkolodziejczyk.simplecrm.customer.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;
-import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerResponse;
+import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerFullResponse;
+import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerBasicResponse;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 import pl.mateuszkolodziejczyk.simplecrm.customer.exception.CanNotDeleteCustomerException;
 import pl.mateuszkolodziejczyk.simplecrm.customer.repository.CustomerRepository;
@@ -12,9 +15,6 @@ import pl.mateuszkolodziejczyk.simplecrm.customer.mapper.CustomerMapper;
 import pl.mateuszkolodziejczyk.simplecrm.employee.domain.Employee;
 import pl.mateuszkolodziejczyk.simplecrm.employee.repository.EmployeeRepository;
 import pl.mateuszkolodziejczyk.simplecrm.exception.ExceptionSupplier;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,15 +29,15 @@ public class CustomerService {
         return customer.getId();
     }
 
-    public CustomerResponse findCustomerById(Long customerId) {
+    public CustomerFullResponse findCustomerById(Long customerId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ExceptionSupplier.customerNotFound(customerId));
         return customerMapper.toCustomerResponse(customer);
     }
 
-    public List<CustomerResponse> findAll() {
-        return customerRepository.findAll().stream()
-                .map(customerMapper::toCustomerResponse).collect(Collectors.toList());
+    public Page<CustomerBasicResponse> findAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return customerRepository.findAllBy(pageRequest);
     }
 
     public void updateCustomer(Long customerId, CustomerRequest customerRequest) {
