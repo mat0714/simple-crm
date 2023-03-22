@@ -2,7 +2,7 @@ package pl.mateuszkolodziejczyk.simplecrm.customer.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.mateuszkolodziejczyk.simplecrm.customer.api.request.CustomerRequest;
-import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerResponse;
+import pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerFullResponse;
 import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 
 @Component
@@ -29,8 +29,8 @@ public class CustomerMapper {
         return customer;
     }
 
-    public CustomerResponse toCustomerResponse(Customer customer) {
-        return new CustomerResponse(
+    public CustomerFullResponse toCustomerResponse(Customer customer) {
+        return new CustomerFullResponse(
                 customer.getId(),
                 customer.getName(),
                 customer.getSurname(),
