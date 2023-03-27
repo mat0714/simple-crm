@@ -38,7 +38,7 @@ public class CustomerMapper {
                 customer.getEmail(),
                 customer.getDepartment(),
                 customer.getCompany(),
-                customer.getEvent(),
+                customer.getEvents(),
                 customer.getEmployee()
         );
     }

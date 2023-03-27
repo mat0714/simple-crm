@@ -30,20 +30,20 @@ public class Customer {
     private Company company;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "customer")
     @JsonIgnore
-    private List<Event> event;
+    private List<Event> events;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnore
     private Employee employee;
 
     public Customer(String name, String surname, String phone, String email, String department, Company company,
-                    List<Event> event, Employee employee) {
+                    List<Event> events, Employee employee) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
         this.department = department;
         this.company = company;
-        this.event = event;
+        this.events = events;
         this.employee = employee;
     }
 
