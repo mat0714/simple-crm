@@ -11,7 +11,7 @@ import pl.mateuszkolodziejczyk.simplecrm.customer.domain.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query("select new pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerGeneralResponse(" +
+    @Query("select new pl.mateuszkolodziejczyk.simplecrm.customer.api.response.CustomerBasicResponse(" +
             "c.id as id, c.name, c.surname, c.phone, c.email, c.department, c.company) from customers c")
     Page<CustomerBasicResponse> findAllBy(PageRequest pageRequest);
 

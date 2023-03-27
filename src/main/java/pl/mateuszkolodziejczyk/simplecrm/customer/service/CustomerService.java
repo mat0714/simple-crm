@@ -50,7 +50,7 @@ public class CustomerService {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 ExceptionSupplier.customerNotFound(customerId));
         boolean customerHasRelationship =
-                !CollectionUtils.isEmpty(customer.getEvent()) || customer.getEmployee() != null;
+                !CollectionUtils.isEmpty(customer.getEvents()) || customer.getEmployee() != null;
         if (customerHasRelationship) {
             throw new CanNotDeleteCustomerException();
         }
